@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class MainApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("=== MENU UTAMA ===");
+            System.out.println("1. Sistem Distribusi Barang (Graph)");
+            System.out.println("2. Studi kasus 2");
+            System.out.println("3. Studi kasus 3");
+            System.out.println("4. Tutup Aplikasi");
+            System.out.print("Pilih aplikasi (1-3): ");
+            String pilihan = scanner.nextLine();
+
+            switch (pilihan) {
+                case "1":
+                    GraphApp graphApp = new GraphApp(); // Call the main method of GraphApp
+                    graphApp.start();
+                    break;
+                case "2":
+                    // data struktur 2
+                    break;
+                case "3":
+                    // data struktur 3
+                    break;
+                case "4":
+                    System.out.println("Terima kasih, sampai jumpa!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Pilihan tidak valid.\n");
+            }
+        }
+    }
+}
