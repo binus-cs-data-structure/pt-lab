@@ -7,7 +7,7 @@ public class MainApp {
         while (true) {
             System.out.println("=== MENU UTAMA ===");
             System.out.println("1. Sistem Distribusi Barang (Graph)");
-            System.out.println("2. Studi kasus 2");
+            System.out.println("2. Data Produk dan Harga (BST)");
             System.out.println("3. Studi kasus 3");
             System.out.println("4. Tutup Aplikasi");
             System.out.print("Pilih aplikasi (1-3): ");
@@ -15,11 +15,12 @@ public class MainApp {
 
             switch (pilihan) {
                 case "1":
-                    GraphApp graphApp = new GraphApp(); // Call the main method of GraphApp
+                    GraphApp graphApp = new GraphApp();
                     graphApp.start();
                     break;
                 case "2":
-                    // data struktur 2
+                    ProductApp bstApp = new ProductApp(); 
+                    bstApp.start();
                     break;
                 case "3":
                     // data struktur 3
