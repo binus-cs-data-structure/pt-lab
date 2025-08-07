@@ -1,98 +1,50 @@
 import java.util.Scanner;
 
-class ProductNode {
-    String name;
-    int price;
-    String type;
-    ProductNode left, right;
-
-    public ProductNode(String name, int price, String type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
-        this.left = this.right = null;
-    }
-}
-
-public class ProductApp {
-    private ProductNode root;
-
-    public void insert(String name, int price, String type) {
-        root = insertRec(root, name, price, type);
-    }
-
-    private ProductNode insertRec(ProductNode node, String name, int price, String type) {
-        if (node == null) return new ProductNode(name, price, type);
-        if (price < node.price) node.left = insertRec(node.left, name, price, type);
-        else node.right = insertRec(node.right, name, price, type);
-        return node;
-    }
-
-    // Cari berdasarkan awalan nama produk
-    public void searchByPrefix(String prefix) {
-        System.out.println("\nHasil pencarian produk mie dengan awalan \"" + prefix + "\":");
-        if (!searchByPrefixRec(root, prefix.toLowerCase())) {
-            System.out.println("Tidak ada produk mie yang cocok.");
-        }
-    }
-
-    private boolean searchByPrefixRec(ProductNode node, String prefix) {
-        if (node == null) return false;
-
-        boolean found = false;
-        found |= searchByPrefixRec(node.left, prefix);
-
-        if (node.name.toLowerCase().startsWith(prefix)) {
-            System.out.println("- " + node.name + " (" + node.type + ") : Rp" + node.price);
-            found = true;
-        }
-
-        found |= searchByPrefixRec(node.right, prefix);
-        return found;
-    }
-
-    // Tampilkan semua produk dari harga termurah ke termahal
-    public void displayAscending() {
-        System.out.println("\nDaftar Harga Mie(Termurah ke Termahal):");
-        inOrderTraversal(root);
-    }
-
-    private void inOrderTraversal(ProductNode node) {
-        if (node != null) {
-            inOrderTraversal(node.left);
-            System.out.println("- " + node.name + " (" + node.type + ") : Rp" + node.price);
-            inOrderTraversal(node.right);
-        }
-    }
-
-    // Menjalankan aplikasi
+class ProductApp {
     public void start() {
-        Scanner scanner = new Scanner(System.in);
-        ProductApp bst = new ProductApp();
+        Scanner sc = new Scanner(System.in);
+        ProductBST bst = new ProductBST();
 
-        // Tambahkan banyak data produk mie
-        bst.insert("Indomie Goreng", 3000, "Mie");
-        bst.insert("Indomie Ayam Bawang", 3100, "Mie");
-        bst.insert("Indomie Soto", 3200, "Mie");
-        bst.insert("Indomie Kari Ayam", 3300, "Mie");
-        bst.insert("Indomie Rendang", 3500, "Mie");
-        bst.insert("Indomie Cabe Ijo", 3600, "Mie");
-        bst.insert("Mie Sedaap Goreng", 3000, "Mie");
-        bst.insert("Mie Sedaap Ayam Bawang", 3200, "Mie");
-        bst.insert("Mie Sedaap Soto", 3300, "Mie");
-        bst.insert("Supermi Ayam", 2800, "Mie");
-        bst.insert("Supermi Soto", 2900, "Mie");
-        bst.insert("Sarimi Isi 2 Ayam", 5000, "Mie");
-        bst.insert("Sarimi Isi 2 Soto", 5200, "Mie");
-        bst.insert("Pop Mie Ayam", 6000, "Mie");
-        bst.insert("Pop Mie Pedas", 6200, "Mie");
+        // Data awal
+        bst.addProduct("Indomie Goreng", 3000, "Mie");
+        bst.addProduct("Indomie Ayam Bawang", 2800, "Mie");
+        bst.addProduct("Mie Sedaap Kari Ayam", 2900, "Mie");
+        bst.addProduct("Mie Lemonilo", 4500, "Mie");
+        bst.addProduct("Supermi Soto", 2700, "Mie");
+        bst.addProduct("Sarimi Isi 2", 5000, "Mie");
+        bst.addProduct("Pop Mie Ayam", 6000, "Mie");
 
-        // Input pencarian
-        System.out.print("Masukkan nama produk mie yang ingin dicari: ");
-        String cariPrefix = scanner.nextLine();
-        bst.searchByPrefix(cariPrefix);
+        while (true) {
+            System.out.println("\n=== MENU PRODUK ===");
+            System.out.println("1. Lihat semua produk (Harga Termurah -> Termahal)");
+            System.out.println("2. Cari produk berdasarkan awal nama");
+            System.out.println("3. Tambah produk baru");
+            System.out.println("4. Hapus produk");
+            System.out.println("5. Kembali ke Menu Utama");
+            System.out.print("Pilih menu: ");
+            int pilihan = sc.nextInt();
+            sc.nextLine();
 
-        // Tampilkan semua data
-        bst.displayAscending();
+            switch (pilihan) {
+                case 1:
+                    bst.showProductsAscending();
+                    break;
+                case 2:
+                    System.out.print("Masukkan kata awal nama produk: ");
+                    String nama = sc.nextLine();
+                    bst.listMatchingProduct(nama);
+                    break;
+                case 3:
+                    bst.addNewProductInteractive();
+                    break;
+                case 4:
+                    bst.deleteProductInteractive();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+            }
+        }
     }
 }
